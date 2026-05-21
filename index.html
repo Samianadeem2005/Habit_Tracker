@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habit Tracker — Weekly Streaks</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header Section -->
+        <header class="app-header">
+            <div class="brand">
+                <h1>⚡ HabitLoop</h1>
+                <p>Build discipline, one day at a time.</p>
+            </div>
+            <div class="nav-controls">
+                <button id="prev-week-btn" class="btn btn-secondary" aria-label="Previous Week">◀ Prev</button>
+                <button id="today-btn" class="btn btn-secondary" aria-label="Current Week">Today</button>
+                <button id="next-week-btn" class="btn btn-secondary" aria-label="Next Week">Next ▶</button>
+                <button id="open-modal-btn" class="btn btn-primary">+ New Habit</button>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Current Week Label -->
+            <div class="week-indicator">
+                <h2 id="week-range-label">Loading week...</h2>
+            </div>
+
+            <!-- Empty State Container -->
+            <div id="empty-state" class="empty-state hidden">
+                <div class="empty-icon">🌱</div>
+                <h3>No habits tracked yet</h3>
+                <p>Your habits will appear here once you create them. Start small, win big!</p>
+                <button id="empty-state-add-btn" class="btn btn-primary">+ Create Your First Habit</button>
+            </div>
+
+            <!-- Main Habit Grid Matrix -->
+            <div id="grid-wrapper" class="grid-wrapper">
+                <div class="habit-grid" id="habit-grid">
+                    <!-- JavaScript will dynamically inject headers and rows here -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Add Habit Modal -->
+        <div id="habit-modal" class="modal-backdrop hidden">
+            <div class="modal-content" role="dialog" aria-labelledby="modal-title" aria-modal="true">
+                <h3 id="modal-title">Add New Habit</h3>
+                <form id="habit-form">
+                    <div class="form-group">
+                        <label for="habit-name">Habit Name</label>
+                        <input type="text" id="habit-name" placeholder="e.g., Read 30 min, Exercise" required autocomplete="off">
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" id="close-modal-btn" class="btn btn-secondary">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Add Habit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
