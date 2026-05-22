@@ -1,0 +1,386 @@
+:root {
+    --bg-primary: #f8fafc;
+    --bg-surface: #ffffff;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --success: #10b981;
+    --success-bg: #ecfdf5;
+    --border-color: #e2e8f0;
+    --today-highlight: #eff6ff;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --transition: all 0.2s ease-in-out;
+    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    line-height: 1.5;
+    padding: 1.5rem;
+}
+
+.app-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    background-color: var(--bg-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    padding: 2rem;
+}
+
+
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.brand h1 {
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+}
+
+.brand p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+.nav-controls {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+/* Buttons */
+.btn {
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+.btn-primary {
+    background-color: var(--accent);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-hover);
+}
+
+.btn-secondary {
+    background-color: var(--bg-surface);
+    border-color: var(--border-color);
+    color: var(--text-main);
+}
+
+.btn-secondary:hover {
+    background-color: var(--bg-primary);
+}
+
+.week-indicator {
+    margin-bottom: 1.5rem;
+}
+
+.week-indicator h2 {
+    font-size: 1.25rem;
+    color: var(--text-main);
+    font-weight: 700;
+}
+
+.grid-wrapper {
+    overflow-x: auto; /* Enables horizontal scroll on tiny screens */
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background: var(--bg-surface);
+}
+
+
+.habit-grid {
+    display: grid;
+    grid-template-columns: 240px repeat(7, minmax(80px, 1fr)) 100px;
+    min-width: 900px; /* Forces structure layout integrity on overflow */
+}
+
+/* Cell Blueprints */
+.grid-cell {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Headers style adjustment */
+.grid-header {
+    background-color: var(--bg-primary);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    border-bottom: 2px solid var(--border-color);
+}
+
+/* Sticky Column Strategy for Mobile Responsiveness */
+.habit-info-cell {
+    justify-content: flex-start;
+    position: sticky;
+    left: 0;
+    background-color: var(--bg-surface);
+    border-right: 1px solid var(--border-color);
+    z-index: 2;
+    font-weight: 600;
+    gap: 0.5rem;
+}
+
+.grid-header.habit-info-cell {
+    background-color: var(--bg-primary);
+    z-index: 3;
+}
+
+/* Action sub-elements inside sticky cell */
+.delete-habit-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    opacity: 0;
+    transition: var(--transition);
+    padding: 0.25rem;
+}
+
+.habit-info-cell:hover .delete-habit-btn {
+    opacity: 1;
+}
+
+.delete-habit-btn:hover {
+    color: #ef4444;
+}
+
+/* Information Design: Today's Column Highlights */
+.is-today {
+    background-color: var(--today-highlight);
+}
+
+.grid-header.is-today {
+    color: var(--accent);
+}
+
+/* Interaction Design: Reward Checkboxes */
+.checkbox-container {
+    position: relative;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+}
+
+.checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 28px;
+    width: 28px;
+    background-color: var(--bg-primary);
+    border: 2px solid var(--border-color);
+    border-radius: 6px;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.checkbox-container:hover input ~ .checkmark {
+    border-color: var(--text-muted);
+}
+
+.checkbox-container input:checked ~ .checkmark {
+    background-color: var(--success);
+    border-color: var(--success);
+    transform: scale(1.08); /* Spring rewarding micro-interaction */
+    animation: pop 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.checkmark::after {
+    content: "✓";
+    color: white;
+    font-weight: bold;
+    font-size: 0.95rem;
+    display: none;
+}
+
+.checkbox-container input:checked ~ .checkmark::after {
+    display: block;
+}
+
+/* Future / Disabled State UI Management */
+.is-future .checkmark {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background-color: #f1f5f9;
+}
+.is-future {
+    pointer-events: none;
+}
+
+/* Focus States for Accessibility */
+.checkbox-container input:focus-visible ~ .checkmark {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* Dynamic Streak Display Cell */
+.streak-cell {
+    font-weight: 700;
+    color: var(--text-main);
+    background-color: var(--bg-surface);
+}
+.streak-count {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 20px;
+    background-color: var(--bg-primary);
+    font-size: 0.85rem;
+}
+.has-streak .streak-count {
+    background-color: var(--success-bg);
+    color: var(--success);
+}
+
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem 2rem;
+    text-align: center;
+    background: var(--bg-surface);
+    border: 2px dashed var(--border-color);
+    border-radius: var(--radius-md);
+}
+
+.empty-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+}
+
+.empty-state h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    max-width: 400px;
+}
+
+/* Modal Engine Setup */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.modal-content {
+    background: var(--bg-surface);
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+}
+
+.form-group {
+    margin: 1.5rem 0;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    outline: none;
+    font-size: 1rem;
+}
+
+.form-group input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Animations */
+@keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1.08); }
+}
+
+
+@media (max-width: 640px) {
+    body {
+        padding: 0.5rem;
+    }
+    .app-container {
+        padding: 1rem;
+    }
+    .app-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    .nav-controls {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
